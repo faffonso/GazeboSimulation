@@ -1,0 +1,12 @@
+[submodule "catkin_ws/src/unique_identifier"]
+	path = catkin_ws/src/unique_identifier
+	url = https://github.com/ros-geographic-info/unique_identifier.git
+[submodule "catkin_ws/terrasentia_description"]
+	path = catkin_ws/terrasentia_description
+	url = https://github.com/Agricultural-Robotics-Competition/terrasentia_description.git
+[submodule "catkin_ws/src/hector_gazebo"]
+	path = catkin_ws/src/hector_gazebo
+	url = https://github.com/tu-darmstadt-ros-pkg/hector_gazebo.git
+[submodule "catkin_ws/src/geographic_info"]
+	path = catkin_ws/src/geographic_info
+	url = https://github.com/ros-geographic-info/geographic_info.git
