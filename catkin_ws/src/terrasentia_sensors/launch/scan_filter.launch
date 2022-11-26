@@ -1,0 +1,34 @@
+<launch>
+
+     <!-- <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter">
+          <rosparam command="load" file="$(find terrasentia_sensors)/config/lidar/scan_filter.yaml" />
+          <remap from="scan" to="terra/hokuyo"/>
+     </node> -->
+
+	<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+		<param name="destination_frame" value="/puck_scan_base"/>
+		<param name="cloud_destination_topic" value="/puck_cloud"/>
+		<param name="scan_destination_topic" value="/puck_multi_scan"/>
+		<param name="laserscan_topics" value ="/velodyne_points/0 /velodyne_points/1 /velodyne_points/2 /velodyne_points/3 /velodyne_points/8"/>
+				<!-- /velodyne_points/5 /velodyne_points/6 /velodyne_points/7 /velodyne_points/4
+				/velodyne_points/9 /velodyne_points/10 /velodyne_points/11 /velodyne_points/12
+				/velodyne_points/13 /velodyne_points/14 /velodyne_points/15 /velodyne_points/16" /> -->
+	</node>
+
+     <!-- <node pkg="terrasentia_navigation" type="tf_broadcaster" name="laser_transformer" /> -->
+     <!--<node pkg="terrasentia_navigation" type="laser_to_pointcloud" name="laser2Pc" />-->
+
+     <!--<node pkg="terrasentia_navigation" type="ransac_linefitting_node" name="ransac_line_fitter" output="screen">
+          <param name="target_frame" value="hokuyo_link" />
+          <param name="delay" value="100" />
+          /<param name="num_of_iterations" value="20" />
+          <param name="MSD_threshold" value="0.001" />
+          <param name="inlier_threshold" value="0.00004" />
+     </node>-->
+
+    <!-- <node pkg="terrasentia_navigation" type="ekf_node" name="ransac_filter" output="screen">
+          <param name="target_frame" value="hokuyo_link" />
+          <param name="threshold_limit" value="50" />
+     </node> -->
+
+</launch>

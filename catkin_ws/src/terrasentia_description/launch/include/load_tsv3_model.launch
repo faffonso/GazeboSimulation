@@ -1,0 +1,35 @@
+<launch>
+     <arg name="x" default="4.478806"/>
+     <arg name="y" default="-15.375722"/>
+     <arg name="z" default="0.347229"/>
+     <arg name="roll" default="0"/>
+     <arg name="pitch" default="0"/>
+     <arg name="yaw" default="1.544129"/>
+
+     <arg name="bot_model" default="tsv3_default.urdf.xacro" />
+     <arg name="bot_name" default="terrasentia" />
+
+	<group ns="$(arg bot_name)">
+		<!-- <param name="robot_description" command="$(find xacro)/xacro -inorder  '$(find terrasentia_description)/robots/$(arg bot_model)' prefix:=$(arg bot_name)" /> -->
+		<param name="/$(arg bot_name)/robot_description" command="$(find xacro)/xacro '--inorder'  '$(find terrasentia_description)/robots/$(arg bot_model)' 'namespace:=/$(arg bot_name)'" />
+		<node name="spawn_terrasentia" pkg="gazebo_ros" type="spawn_model"
+			args="-x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll)
+			-P $(arg pitch) -Y $(arg yaw) -urdf -param /$(arg bot_name)/robot_description -model $(arg bot_name)"
+			output="screen"
+		/>
+
+	     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+	          <param name="publish_frequency" type="double" value="200.0"/>
+			<param name="tf_prefix"         value="$(arg bot_name)"/>
+			<param name="robot_description" value="/$(arg bot_name)/robot_description"/>
+	     </node>
+
+	     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+			<param name="rate" type="double" value="100.0"/>
+			<!-- <param name="robot_description" type="string" value="$(arg bot_name)/robot_description"/> -->
+		</node>
+
+		<node pkg="tf" type="static_transform_publisher" name="world_broadcaster" args="0 0 0 0 0 0 world $(arg bot_name)/odom 100" />
+	</group>
+
+</launch>

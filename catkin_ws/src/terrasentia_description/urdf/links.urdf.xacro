@@ -1,0 +1,249 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+     <xacro:include filename="$(find terrasentia_description)/urdf/includes/materials.urdf.xacro"/>
+     <xacro:include filename="$(find terrasentia_description)/urdf/includes/macros_test.urdf.xacro"/>
+
+     <!-- ====================================================
+                           Chassis
+     ========================================================= -->
+	<xacro:macro name="base_footprint" params="parent child z_foot">
+		<link name="${parent}">
+               <inertial>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <mass value="0.000001" />
+                    <inertia
+                         ixx="0.00001"
+                         ixy="0"
+                         ixz="0"
+                         iyy="0.00001"
+                         iyz="0"
+                         izz="0.00001" />
+               </inertial>
+			<visual>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<geometry>
+					<box size="0.001 0.001 0.001"/>
+				</geometry>
+			</visual>
+		</link>
+
+		<joint name="base_footprint_joint" type="fixed">
+			<origin rpy="0 0 0" xyz="0 0 ${z_foot}"/>
+			<parent link="${parent}"/>
+			<child link="${child}"/>
+		</joint>
+
+	</xacro:macro>
+
+     <xacro:macro name="ts0_chassis" params="name stl size z_offset color">
+		<link name="${name}">
+               <inertial>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <mass value="6.0" />
+                    <inertia
+                         ixx="0.122093388435243"
+                         ixy="-5.18071630328694E-05"
+                         ixz="-1.26402328468967E-07"
+                         iyy="0.0701553507738806"
+                         iyz="-2.8686685672646E-05"
+                         izz="0.180467783705259" />
+               </inertial>
+
+               <visual>
+                    <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+                    <xacro:color_material color="${color}"/>
+               </visual>
+               <collision>
+                    <origin xyz="0 0 ${z_offset}" rpy="0 0 -1.5708" />
+                    <geometry>
+                         <box size="${size}"/>
+                    </geometry>
+               </collision>
+          </link>
+
+          <xacro:add_friction_gazebo parent="${name}" mu1="1.0" mu2="1.0" fdir1="0 0 0" />
+          <xacro:color_gazebo parent="${name}" color="${color}"/>
+
+     </xacro:macro>
+
+     <!-- ====================================================
+                           Lid
+     ========================================================= -->
+     <xacro:macro name="ts0_lid" params="stl size z_offset color">
+          <link name="lid_link">
+               <inertial>
+                    <origin xyz="0 0 0" rpy="0 0 1.5708" />
+                    <mass value="0.00001" />
+                    <inertia
+                         ixx="0"
+                         ixy="0"
+                         ixz="0"
+                         iyy="0"
+                         iyz="0"
+                         izz="0" />
+               </inertial>
+
+               <visual>
+                    <origin xyz="0 0 0" rpy="0 0 1.5708" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+                    <xacro:color_material color="${color}"/>
+               </visual>
+               <collision>
+                    <origin xyz="0 0 ${z_offset}" rpy="0 0 1.5708" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+               </collision>
+          </link>
+
+          <xacro:color_gazebo parent="lid_link" color="${color}"/>
+
+     </xacro:macro>
+     <!-- ====================================================
+                           Wheel Link
+     ========================================================= -->
+     <xacro:macro name="wheel" params="prefix suffix stl radius depth reflect color friction scale *origin">
+          <link name="${prefix}_${suffix}_wheel">
+               <inertial>
+                    <origin xyz="0 ${reflect*-0.01684} 0" rpy="0 1.5708 ${reflect*1.5708}" />
+                    <mass value="0.49338" />
+                    <inertia
+                         ixx="0.0015543"
+                         ixy="2.7164E-10"
+                         ixz="-6.3943E-10"
+                         iyy="0.0015543"
+                         iyz="-4.2467E-11"
+                         izz="0.0030035" />
+               </inertial>
+               <visual>
+                    <xacro:insert_block name="origin" />
+                    <geometry>
+                         <mesh filename="${stl}" scale="${scale} ${scale} ${scale}"/>
+                    </geometry>
+                    <xacro:color_material color="${color}"/>
+               </visual>
+               <collision>
+                    <xacro:insert_block name="origin" />
+                    <geometry>
+                         <mesh filename="${stl}" scale="${scale} ${scale} ${scale}"/>
+                    </geometry>
+               </collision>
+          </link>
+
+          <!-- Testing Insert of <surface> properties  -->
+          <xacro:add_friction_gazebo parent="${prefix}_${suffix}_wheel" mu1="${friction}" mu2="${friction}" fdir1="0 0 0" />
+          <xacro:color_gazebo parent="${prefix}_${suffix}_wheel" color="${color}"/>
+
+     </xacro:macro>
+
+     <!-- ====================================================
+                           Motor Links
+     ========================================================= -->
+     <xacro:macro name="motor" params="prefix suffix stl color">
+          <link name="${prefix}_${suffix}_motor">
+               <inertial>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <mass value="0.49338" />
+                    <inertia
+                         ixx="0.0015543"
+                         ixy="6.4446E-12"
+                         ixz="-5.9794E-10"
+                         iyy="0.0015543"
+                         iyz="2.1331E-13"
+                         izz="0.0030035" />
+               </inertial>
+               <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                         <sphere radius=".005" />
+                    </geometry>
+                    <xacro:color_material color="${color}"/>
+               </visual>
+               <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                         <sphere radius=".005" />
+                    </geometry>
+               </collision>
+          </link>
+
+          <xacro:color_gazebo parent="${prefix}_${suffix}_motor" color="${color}"/>
+
+     </xacro:macro>
+
+
+     <!-- ====================================================
+                           Leg Links
+     ========================================================= -->
+     <xacro:macro name="leg_type_1" params="prefix suffix stl color" >
+          <link name="${prefix}_${suffix}_leg">
+               <inertial>
+                    <origin xyz="0.098232 0.0061512 -0.0088726" rpy="0 0 0" />
+                    <mass value="0.34246" />
+                    <inertia
+                         ixx="0.00022043"
+                         ixy="-0.00012767"
+                         ixz="0.0001878"
+                         iyy="0.0018094"
+                         iyz="1.1442E-05"
+                         izz="0.0017383" />
+               </inertial>
+               <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+                    <xacro:color_material color="${color}"/>
+               </visual>
+               <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+               </collision>
+          </link>
+
+          <xacro:color_gazebo parent="${prefix}_${suffix}_leg" color="${color}"/>
+
+     </xacro:macro>
+
+
+     <xacro:macro name="leg_type_2" params="prefix suffix stl color" >
+          <link name="${prefix}_${suffix}_leg">
+               <inertial>
+                    <origin xyz="-0.098087 0.0061512 -0.0088726" rpy="0 0 0" />
+                    <mass value="0.34246" />
+                    <inertia
+                         ixx="0.00022043"
+                         ixy="0.00012662"
+                         ixz="-0.00018748"
+                         iyy="0.0018033"
+                         iyz="1.1442E-05"
+                         izz="0.0017322" />
+               </inertial>
+               <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+                    <xacro:color_material color="${color}"/>
+               </visual>
+               <collision>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                         <mesh filename="${stl}" />
+                    </geometry>
+               </collision>
+          </link>
+
+          <xacro:color_gazebo parent="${prefix}_${suffix}_leg" color="${color}"/>
+
+     </xacro:macro>
+
+</robot>

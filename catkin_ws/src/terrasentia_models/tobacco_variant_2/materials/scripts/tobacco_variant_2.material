@@ -1,0 +1,35 @@
+material Tobacco/Stem
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG13brn2.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Tobacco/Leaves
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG13lef1.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}

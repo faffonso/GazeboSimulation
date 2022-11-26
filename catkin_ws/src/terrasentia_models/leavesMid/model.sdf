@@ -1,0 +1,41 @@
+<sdf version="1.5">
+     <model name="leavesMid">
+          <static>true</static>
+          <link name="link">
+               <inertial>
+                    <pose>0 0 0 0 0 0</pose>
+                    <mass>4</mass>
+                    <inertia>
+                         <ixx>0.01</ixx>
+                         <ixy>0</ixy>
+                         <ixz>0</ixz>
+                         <iyy>0.01</iyy>
+                         <iyz>0</iyz>
+                         <izz>0.01</izz>
+                    </inertia>
+               </inertial>
+
+
+              
+
+               <visual name="leavesm">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_1/meshes/corn_variant_1.dae</uri>
+                              <submesh>
+                                   <name>LeavesMid</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_1/materials/scripts/</uri>
+                              <uri>model://corn_variant_1/materials/textures/</uri>
+                              <name>Corn/LeavesMid</name>
+                         </script>
+                    </material>
+               </visual>
+
+          </link>
+     </model>
+</sdf>

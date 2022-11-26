@@ -1,0 +1,71 @@
+<launch>
+
+     <arg name="use_joy" default="false"/>
+     <arg name="dev_joy" default="/dev/input/js3"/>
+     <arg name="gui" default="false" />
+     <arg name="bot_model" default="tsv2_ari.urdf.xacro" />
+
+     <param name="use_gui" value="$(arg gui)" />
+
+     <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+          <arg name="paused" value="true"/>
+          <arg name="verbose" value="true"/>
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS1" />
+		<arg name="y" value="0.0" />
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS2" />
+		<arg name="y" value="1.0" />
+		<arg name="yaw" value="-3.14" />
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS3" />
+		<arg name="y" value="4.0" />
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS4" />
+		<arg name="y" value="5.0" />
+		<arg name="yaw" value="-3.14" />
+     </include>
+
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS5" />
+		<arg name="y" value="-3.0" />
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS6" />
+		<arg name="y" value="-4.0" />
+		<arg name="yaw" value="-3.14" />
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS7" />
+		<arg name="y" value="-7.0" />
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv2_model.launch" >
+		<arg name="bot_model" default="$(arg bot_model)" />
+		<arg name="bot_name" default="TS8" />
+		<arg name="y" value="-8.0" />
+		<arg name="yaw" value="-3.14" />
+     </include>
+
+	<node name="rviz" pkg="rviz" type="rviz"
+		 args="-d $(find terrasentia_description)/config/rviz/ari_ctf.rviz" />
+
+</launch>

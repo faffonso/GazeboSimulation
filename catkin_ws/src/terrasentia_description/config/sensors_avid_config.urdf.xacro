@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+     <!-- ====================================================
+                           Includes
+     ========================================================= -->
+     <xacro:include filename="$(find terrasentia_sensors)/urdf/all_sensors.urdf.xacro" />
+
+     <!-- ====================================================
+                           Sensors
+     ========================================================= -->
+
+     <!-- LiDAR -->
+     <xacro:sensor_hokuyo_ust10lx name="hokuyo" parent="base_link" color="red">
+          <origin xyz="0.275 0 0.15" rpy="0 -1.57 3.14"/>
+     </xacro:sensor_hokuyo_ust10lx>
+
+     <!-- Front Camera -->
+     <xacro:sensor_ueye_cp_gige name="camera" parent="base_link" color="purple">
+          <origin xyz="0.23 0 0.06" rpy="0 0 0"/>
+     </xacro:sensor_ueye_cp_gige>
+
+     <!-- Left Side Camera -->
+     <xacro:sensor_ueye_cp_gige name="camera_left" parent="base_link" color="purple">
+          <origin xyz="0 0.16 0.06" rpy="0 0.349066 1.5708"/>
+     </xacro:sensor_ueye_cp_gige>
+
+     <xacro:sensor_ueye_cp_gige name="camera_right" parent="base_link" color="purple">
+          <origin xyz="0 -0.16 0.06" rpy="0 0.349066 -1.5708"/>
+     </xacro:sensor_ueye_cp_gige>
+
+     <!-- IMU -->
+     <xacro:sensor_imu_hector name="imu" parent="base_link" color="red"
+                    update_rate="50.0"
+                    noise="0.005"
+                    yaw_offset="0.0"
+                    yaw_drift="0.02"
+                    yaw_noise="0.01"
+                    rate_offset="0.0 0.0 0.0"
+                    rate_drift="0.002 0.002 0.002"
+                    rate_noise="0.001 0.001 0.001"
+                    accel_offset="0.0 0.0 0.0"
+                    accel_drift="0.005 0.005 0.005"
+                    accel_noise="0.005 0.005 0.005">
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+     </xacro:sensor_imu_hector>
+
+     <!-- GPS -->
+     <xacro:sensor_gps name="gps" parent="base_link" color="white"
+                    ref_lat="39.5080331"
+                    ref_long="-0.4619816"
+                    ref_head="90.0"
+                    update_rate="50.0"
+                    drift="0.0"
+                    noise="0.1"
+                    vel_drift="0.00001"
+                    vel_noise="0.00001">
+          <origin xyz="0 0 0.12" rpy="0 0 0"/>
+     </xacro:sensor_gps>
+
+</robot>

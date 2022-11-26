@@ -1,0 +1,89 @@
+material Sorghum/Stem
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16brn2.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Sorghum/LeavesBase
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16lef2.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Sorghum/LeavesMid
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16lef4.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Sorghum/LeavesTop
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16lef1.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Sorghum/Flower
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16flw2.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}

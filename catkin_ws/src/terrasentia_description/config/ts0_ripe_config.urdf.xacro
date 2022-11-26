@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+     <!-- ====================================================
+                         STL Filepaths
+     ========================================================= -->
+     <xacro:property name="chassis_stl" value="package://terrasentia_description/meshes/v1/base_link.STL"/>
+     <xacro:property name="leg1_stl"    value="package://terrasentia_description/meshes/v1/leg_type_1.STL"/>
+     <xacro:property name="leg2_stl"    value="package://terrasentia_description/meshes/v1/leg_type_2.STL"/>
+     <xacro:property name="lid_stl"     value="package://terrasentia_description/meshes/v1/lid.STL"/>
+     <xacro:property name="wheel_stl"   value="package://terrasentia_description/meshes/v1/wheel.STL"/>
+
+     <!-- ====================================================
+                           Define Variables
+     ========================================================= -->
+     <xacro:property name="WHEEL_RADIUS" value="0.097"/>
+     <xacro:property name="WHEEL_DEPTH" value="0.03838"/>
+     <xacro:property name="CHASSIS_SIZE" value="0.35322 0.508 0.13136"/>
+     <xacro:property name="CHASSIS_OFFSET" value="0.04545"/>
+     <xacro:property name="LID_SIZE" value="0.35322 0.508 0.015"/>
+     <xacro:property name="LID_OFFSET" value="0.0"/>
+
+     <!-- ====================================================
+                         Suspension Properties
+     ========================================================= -->
+     <xacro:property name="susp_stiffness" value="100"/>
+     <xacro:property name="susp_damping" value="1"/>
+     <xacro:property name="susp_reference" value="0"/>
+
+     <!-- ====================================================
+                         Wheel Properties
+     ========================================================= -->
+     <xacro:property name="FR_WHEEL_FRICTION" value="0.75"/>
+     <xacro:property name="FL_WHEEL_FRICTION" value="0.75"/>
+     <xacro:property name="RR_WHEEL_FRICTION" value="0.75"/>
+     <xacro:property name="RL_WHEEL_FRICTION" value="0.75"/>
+
+     <!-- ====================================================
+                           Constants
+     ========================================================= -->
+     <xacro:property name="M_PI" value="3.1415926535897931" />
+
+</robot>

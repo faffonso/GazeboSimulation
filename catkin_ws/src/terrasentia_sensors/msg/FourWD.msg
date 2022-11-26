@@ -1,0 +1,6 @@
+std_msgs/Header header
+terrasentia_sensors/Motor front_left
+terrasentia_sensors/Motor front_right
+terrasentia_sensors/Motor back_left
+terrasentia_sensors/Motor back_right
+float32 read_timestamp

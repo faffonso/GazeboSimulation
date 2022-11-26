@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<launch>
+
+     <!-- Robot pose-->
+     <arg name="x" default="0"/>
+     <arg name="y" default="-1"/>
+     <arg name="z" default="0.5"/>
+     <arg name="roll" default="0"/>
+     <arg name="pitch" default="0"/>
+     <arg name="yaw" default="1.5708"/>
+
+     <!-- Launch configuration settings -->
+     <arg name="use_joy" default="false"/>
+     <arg name="bot_model" default="ts0_avid.urdf.xacro" />
+     <param name="robot_description" command="$(find xacro)/xacro $(find terrasentia_description)/robots/$(arg bot_model)" />
+
+     <arg name="use_rviz" default="true"/>
+
+     <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
+          <param name="publish_frequency" type="double" value="200.0"/>
+     </node>
+
+     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+     <node name="spawn_terrasentia" pkg="gazebo_ros" type="spawn_model"
+          args="-x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll)
+         -P $(arg pitch) -Y $(arg yaw) -urdf -param robot_description -model TerraSentia_0"
+          output="screen"
+     />
+
+     <!-- Load joystick nodes for manual control -->
+     <group if="$(arg use_joy)">
+          <node pkg="joy" type="joy_node" name="joy_node">
+               <param name="dev" value="$(arg dev_joy)"/>
+          </node>
+          <!-- Xbox -->
+          <!-- <node pkg="teleop_twist_joy" type="teleop_node" name="joy_controller_node">
+               <param name="enable_button" value="7"/>
+               <param name="axis_angular" value="2"/>
+               <param name="scale_linear" value="1"/>
+               <param name="scale_angular" value="1.5"/>
+          </node> -->
+
+          <!-- PS3 -->
+          <node pkg="teleop_twist_joy" type="teleop_node" name="joy_controller_node">
+               <param name="enable_button" value="11"/>
+               <param name="axis_angular" value="2"/>
+               <param name="scale_linear" value="1"/>
+               <param name="scale_angular" value="1.5"/>
+          </node>
+     </group>
+     <group unless="$(arg use_joy)">
+          <node pkg="terrasentia_sensors" type="terra_rc_controller_node" name="udp_node"/>
+          <node pkg="terrasentia_sensors" type="terra_sensor_relay_node" name="sim_sensor_node"/>
+     </group>
+
+     <!-- Start RViz for visualization -->
+     <group if="$(arg use_rviz)">
+          <node name="rviz" pkg="rviz" type="rviz"
+                args="-d $(find terrasentia_description)/config/rviz/terra_rviz_config.rviz" />
+     </group>
+
+</launch>

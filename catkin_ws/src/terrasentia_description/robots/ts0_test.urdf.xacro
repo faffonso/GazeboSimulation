@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot name="TS0" xmlns:xacro="http://ros.org/wiki/xacro">
+
+     <!-- ====================================================
+                           Base Includes
+     ========================================================= -->
+     <xacro:include filename="$(find terrasentia_description)/config/ts0_test_config.urdf.xacro"/>
+     <xacro:include filename="$(find terrasentia_description)/urdf/links.urdf.xacro"/>
+     <xacro:include filename="$(find terrasentia_description)/urdf/joints.urdf.xacro"/>
+
+     <!-- ====================================================
+                           Components
+     ========================================================= -->
+     <xacro:ts0_chassis name="base_link" stl="${chassis_stl}" size="${CHASSIS_SIZE}" z_offset="${CHASSIS_OFFSET}" color="grey"/>
+     <xacro:ts0_lid stl="${lid_stl}" size="${LID_SIZE}" z_offset="${LID_OFFSET}" color="grey"/>
+
+     <xacro:leg_type_1 prefix="front" suffix="right" stl="${leg1_stl}" color="orange"/>
+     <xacro:leg_type_1 prefix="rear" suffix="left" stl="${leg1_stl}" color="orange"/>
+     <xacro:leg_type_2 prefix="front" suffix="left" stl="${leg2_stl}" color="orange"/>
+     <xacro:leg_type_2 prefix="rear" suffix="right" stl="${leg2_stl}" color="orange"/>
+
+     <xacro:wheel prefix="front" suffix="right" stl="${wheel_stl}" color="grey"
+          radius="${WHEEL_RADIUS}" depth="${WHEEL_DEPTH}" reflect="1" friction="${FR_WHEEL_FRICTION}" scale="0.0254">
+          <origin xyz="0 -${WHEEL_DEPTH} 0" rpy="0 0 0" />
+     </xacro:wheel>
+
+     <xacro:wheel prefix="front" suffix="left" stl="${wheel_stl}" color="grey"
+          radius="${WHEEL_RADIUS}" depth="${WHEEL_DEPTH}" reflect="-1" friction="${FL_WHEEL_FRICTION}" scale="0.0254">
+          <origin xyz="0 ${WHEEL_DEPTH} 0" rpy="0 0 -3.154" />
+     </xacro:wheel>
+
+     <xacro:wheel prefix="rear" suffix="right" stl="${wheel_stl}" color="grey"
+          radius="${WHEEL_RADIUS}" depth="${WHEEL_DEPTH}" reflect="1" friction="${RR_WHEEL_FRICTION}" scale="0.0254">
+          <origin xyz="0 -${WHEEL_DEPTH} 0" rpy="0 0 0" />
+     </xacro:wheel>
+
+     <xacro:wheel prefix="rear" suffix="left" stl="${wheel_stl}" color="grey"
+          radius="${WHEEL_RADIUS}" depth="${WHEEL_DEPTH}" reflect="-1" friction="${RL_WHEEL_FRICTION}" scale="0.0254">
+          <origin xyz="0 ${WHEEL_DEPTH} 0" rpy="0 0 -3.154" />
+     </xacro:wheel>
+
+
+     <!-- ====================================================
+                           Joints
+     ========================================================= -->
+
+     <xacro:attach_lid parent="base_link">
+          <origin xyz="0.23525 0.0214 -0.2085" rpy="0 0 0"/>
+     </xacro:attach_lid>
+
+     <xacro:attach_leg_type_1 parent="base_link" link="front_right_leg" reflect="-1" min="-0.682" max="0" stiffness="${susp_stiffness}" damping="${susp_damping}" reference="${susp_reference}">
+          <axis xyz="0 0 -1"/>
+     </xacro:attach_leg_type_1>
+
+     <xacro:attach_leg_type_1 parent="base_link" link="rear_left_leg" reflect="1" min="-0.682" max="0" stiffness="${susp_stiffness}" damping="${susp_damping}" reference="${susp_reference}">
+          <axis xyz="0 0 -1"/>
+     </xacro:attach_leg_type_1>
+
+     <xacro:attach_leg_type_2 parent="base_link" link="front_left_leg" reflect="1" min="0" max="0.682" stiffness="${susp_stiffness}" damping="${susp_damping}" reference="${susp_reference}">
+          <axis xyz="0 0 -1"/>
+     </xacro:attach_leg_type_2>
+
+     <xacro:attach_leg_type_2 parent="base_link" link="rear_right_leg" reflect="-1" min="-0.682" max="0" stiffness="${susp_stiffness}" damping="${susp_damping}" reference="${susp_reference}">
+          <axis xyz="0 0 1"/>
+     </xacro:attach_leg_type_2>
+
+     <xacro:attach_wheel_leg prefix="front" suffix="right">
+          <origin xyz="0.1601 0.023246 0.0254775" rpy="-1.5708 0 0.95382" />
+          <axis xyz="0 1 0"/>
+     </xacro:attach_wheel_leg>
+
+     <xacro:attach_wheel_leg prefix="front" suffix="left">
+          <origin xyz="-0.1601 0.023246 0.0254775" rpy="1.5708 0 2.18777" />
+          <axis xyz="0 1 0"/>
+     </xacro:attach_wheel_leg>
+
+     <xacro:attach_wheel_leg prefix="rear" suffix="right">
+          <origin xyz="-0.1601 0.023246 0.0254775" rpy="-1.5708 0 -0.95382" />
+          <axis xyz="0 1 0"/>
+     </xacro:attach_wheel_leg>
+
+     <xacro:attach_wheel_leg prefix="rear" suffix="left">
+          <origin xyz="0.1601 0.023246 0.0254775" rpy="1.5708 0 4.09542" />
+          <axis xyz="0 1 0"/>
+     </xacro:attach_wheel_leg>
+
+
+     <!-- ====================================================
+          Include All Add-Ons (Sensors and Controllers)
+     ========================================================= -->
+     <xacro:include filename="$(find terrasentia_description)/config/sensors_test_config.urdf.xacro"/>
+
+     <!-- ====================================================
+                           Controllers
+     ========================================================= -->
+     <gazebo>
+          <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+               <updateRate>100.0</updateRate>
+               <robotNamespace>/</robotNamespace>
+               <leftFrontJoint>front_left_wheel_rev</leftFrontJoint>
+               <rightFrontJoint>front_right_wheel_rev</rightFrontJoint>
+               <leftRearJoint>rear_left_wheel_rev</leftRearJoint>
+               <rightRearJoint>rear_right_wheel_rev</rightRearJoint>
+               <wheelSeparation>0.4</wheelSeparation>
+               <wheelDiameter>0.194</wheelDiameter>
+               <robotBaseFrame>base_link</robotBaseFrame>
+               <torque>20</torque>
+               <topicName>cmd_vel</topicName>
+               <broadcastTF>true</broadcastTF>
+               <commandTopic>cmd_vel</commandTopic>
+               <odometryTopic>odom</odometryTopic>
+               <odometryFrame>odom</odometryFrame>
+               <covariance_x>0.0001</covariance_x>
+               <covariance_y>0.0001</covariance_y>
+               <covariance_yaw>0.01</covariance_yaw>
+          </plugin>
+     </gazebo>
+
+</robot>

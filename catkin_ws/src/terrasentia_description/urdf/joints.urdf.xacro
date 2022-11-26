@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+     <!-- ====================================================
+                           Lid
+     ========================================================= -->
+	<xacro:macro name="attach_base_to_footprint" params="parent *origin">
+          <joint name="footprint_joint" type="fixed">
+               <xacro:insert_block name="origin" />
+               <parent link="${parent}" />
+               <child link="base_link" />
+          </joint>
+     </xacro:macro>
+
+	<xacro:macro name="attach_lid" params="parent *origin">
+          <joint name="lid_joint" type="fixed">
+               <xacro:insert_block name="origin" />
+               <parent link="${parent}" />
+               <child link="lid_link" />
+          </joint>
+     </xacro:macro>
+
+     <!-- ====================================================
+                           Wheel Revolute
+     ========================================================= -->
+     <xacro:macro name="attach_wheel_leg" params="prefix suffix *origin *axis">
+          <joint name="${prefix}_${suffix}_wheel_rev" type="continuous">
+               <xacro:insert_block name="origin" />
+               <parent link="${prefix}_${suffix}_leg" />
+               <child link="${prefix}_${suffix}_wheel" />
+               <xacro:insert_block name="axis" />
+          </joint>
+     </xacro:macro>
+
+     <!-- ====================================================
+                           Leg Revolutes
+     ========================================================= -->
+     <xacro:macro name="attach_leg_type_1" params="parent link reflect min max stiffness damping reference *axis">
+          <joint name="${link}_pivot" type="revolute">
+               <origin xyz="${reflect*-0.04356} ${reflect*0.15411} 0.03559" rpy="1.5708 0.95382 ${(reflect+1)*1.5708}" />
+               <parent link="${parent}" />
+               <child link="${link}" />
+               <xacro:insert_block name="axis" />
+               <limit
+                    lower="${min}"
+                    upper="${max}"
+                    effort="10000"
+                    velocity="10000" />
+               <dynamics
+                    damping="0"
+                    spring_stiffness="${stiffness}"
+                    spring_reference="${reference}" />
+          </joint>
+
+          <gazebo>
+               <plugin name="spring_plugin_${link}" filename="libTorsionalSpringPlugin.so" >
+                    <joint_handle>${link}_pivot</joint_handle>
+                    <spring_stiffness>${stiffness}</spring_stiffness>
+                    <spring_damping>${damping}</spring_damping>
+                    <spring_reference>${reference}</spring_reference>
+               </plugin>
+          </gazebo>
+
+     </xacro:macro>
+
+     <xacro:macro name="attach_leg_type_2" params="parent link reflect min max stiffness damping reference *axis">
+          <joint name="${link}_pivot" type="revolute">
+               <origin xyz="${reflect*0.04356} ${reflect*0.15411} 0.03559" rpy="1.5708 -0.95382 ${(reflect+1)*-1.5708}" />
+               <parent link="${parent}" />
+               <child link="${link}" />
+               <xacro:insert_block name="axis" />
+               <limit
+                    lower="${min}"
+                    upper="${max}"
+                    effort="10000"
+                    velocity="10000" />
+               <dynamics
+                    damping="0"
+                    spring_stiffness="${stiffness}"
+                    spring_reference="${reference}" />
+          </joint>
+
+          <gazebo>
+               <plugin name="spring_plugin_${link}" filename="libTorsionalSpringPlugin.so" >
+                    <joint_handle>${link}_pivot</joint_handle>
+                    <spring_stiffness>${stiffness}</spring_stiffness>
+                    <spring_damping>${damping}</spring_damping>
+                    <spring_reference>${reference}</spring_reference>
+               </plugin>
+          </gazebo>
+
+     </xacro:macro>
+
+
+</robot>

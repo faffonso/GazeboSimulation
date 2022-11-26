@@ -1,0 +1,139 @@
+<sdf version="1.5">
+     <model name="corn_variant_5">
+          <static>true</static>
+          <link name="link">
+               <inertial>
+                    <pose>0 0 0 0 0 0</pose>
+                    <mass>4</mass>
+                    <inertia>
+                         <ixx>0.01</ixx>
+                         <ixy>0</ixy>
+                         <ixz>0</ixz>
+                         <iyy>0.01</iyy>
+                         <iyz>0</iyz>
+                         <izz>0.01</izz>
+                    </inertia>
+               </inertial>
+
+               <collision name='collision'>
+                    <pose>0 0 1.125 0 0 0</pose>
+                    <geometry>
+                         <cylinder>
+                              <radius>0.01</radius>
+                              <length>2.25</length>
+                         </cylinder>
+                    </geometry>
+                    <max_contacts>10</max_contacts>
+               </collision>
+
+               <visual name="stem">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_5/meshes/corn_variant_5.dae</uri>
+                              <submesh>
+                                   <name>Stem</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_5/materials/scripts/</uri>
+                              <uri>model://corn_variant_5/materials/textures/</uri>
+                              <name>Corn/Stem</name>
+                         </script>
+                    </material>
+               </visual>
+
+               <visual name="leavesm">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_5/meshes/corn_variant_5.dae</uri>
+                              <submesh>
+                                   <name>LeavesMid</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_5/materials/scripts/</uri>
+                              <uri>model://corn_variant_5/materials/textures/</uri>
+                              <name>Corn/LeavesMid</name>
+                         </script>
+                    </material>
+               </visual>
+
+               <visual name="leavest">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_5/meshes/corn_variant_5.dae</uri>
+                              <submesh>
+                                   <name>LeavesTop</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_5/materials/scripts/</uri>
+                              <uri>model://corn_variant_5/materials/textures/</uri>
+                              <name>Corn/LeavesTop</name>
+                         </script>
+                    </material>
+               </visual>
+
+               <visual name="ear">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_5/meshes/corn_variant_5.dae</uri>
+                              <submesh>
+                                   <name>Ear</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_5/materials/scripts/</uri>
+                              <uri>model://corn_variant_5/materials/textures/</uri>
+                              <name>Corn/Ear</name>
+                         </script>
+                    </material>
+               </visual>
+
+               <visual name="eart">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_5/meshes/corn_variant_5.dae</uri>
+                              <submesh>
+                                   <name>EarTassel</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_5/materials/scripts/</uri>
+                              <uri>model://corn_variant_5/materials/textures/</uri>
+                              <name>Corn/EarTassel</name>
+                         </script>
+                    </material>
+               </visual>
+
+               <visual name="flowert">
+                    <geometry>
+                         <mesh>
+                              <uri>model://corn_variant_5/meshes/corn_variant_5.dae</uri>
+                              <submesh>
+                                   <name>FlowerTop</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://corn_variant_5/materials/scripts/</uri>
+                              <uri>model://corn_variant_5/materials/textures/</uri>
+                              <name>Corn/FlowerTop</name>
+                         </script>
+                    </material>
+               </visual>
+
+          </link>
+     </model>
+</sdf>

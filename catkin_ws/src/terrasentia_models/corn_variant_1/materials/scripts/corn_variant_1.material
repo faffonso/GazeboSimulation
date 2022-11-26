@@ -1,0 +1,53 @@
+material Corn/Stem
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG20brn3.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Corn/LeavesBase
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG20lef3.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Corn/LeavesMid
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG20lef2.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}

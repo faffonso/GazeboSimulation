@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<launch>
+
+     <!-- Robot pose-->
+     <arg name="x1" default="-3"/>
+     <arg name="y1" default="-4"/>
+     <arg name="z1" default="0.5"/>
+     <arg name="roll1" default="0"/>
+     <arg name="pitch1" default="0"/>
+     <arg name="yaw1" default="1.5708"/>
+
+     <arg name="x2" default="3"/>
+     <arg name="y2" default="-4"/>
+     <arg name="z2" default="0.5"/>
+     <arg name="roll2" default="0"/>
+     <arg name="pitch2" default="0"/>
+     <arg name="yaw2" default="1.5708"/>
+
+     <arg name="use_rviz" default="true"/>
+
+     <!-- Launch configuration settings -->
+     <arg name="bot_model" default="multi_ts0.urdf.xacro" />
+
+     <arg name="ns1" default="bot1" />
+     <arg name="ns2" default="bot2" />
+
+     <!-- Load Robot model and associated nodes -->
+     <group ns="$(arg ns1)">
+          <param name="bot1/robot_description" command="$(find xacro)/xacro --inorder '$(find terrasentia_description)/robots/$(arg bot_model)' prefix:=$(arg ns1)" />
+          <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher1">
+               <param name="publish_frequency" type="double" value="200.0"/>
+               <param name="tf_prefix" type="string" value="/bot1"/>
+          </node>
+
+          <node name="joint_state_publisher1" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+          <node name="spawn_terrasentia1" pkg="gazebo_ros" type="spawn_model"
+               args="-x $(arg x1) -y $(arg y1) -z $(arg z1) -R $(arg roll1)
+              -P $(arg pitch1) -Y $(arg yaw1) -urdf -param /bot1/robot_description -model TS0-1"
+               output="screen"
+          />
+
+          <!-- <node pkg="terrasentia_sensors" type="terra_rc_controller_node" name="udp_node">
+               <param name="target" type="string" value="/bot1"/>
+          </node> -->
+          <!-- <node pkg="terrasentia_sensors" type="terra_sensor_relay_node" name="sim_sensor_node"/> -->
+     </group>
+
+
+     <group ns="$(arg ns2)">
+          <param name="bot2/robot_description" command="$(find xacro)/xacro --inorder '$(find terrasentia_description)/robots/$(arg bot_model)' prefix:=$(arg ns2)" />
+          <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher2">
+               <param name="publish_frequency" type="double" value="200.0"/>
+               <param name="tf_prefix" type="string" value="/bot2"/>
+          </node>
+
+          <node name="joint_state_publisher2" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+          <node name="spawn_terrasentia2" pkg="gazebo_ros" type="spawn_model"
+               args="-x $(arg x2) -y $(arg y2) -z $(arg z2) -R $(arg roll2)
+              -P $(arg pitch2) -Y $(arg yaw2) -urdf -param /bot2/robot_description -model TS0-2"
+               output="screen"
+          />
+
+          <!-- <node pkg="terrasentia_sensors" type="terra_rc_controller_node" name="udp_node"/>
+          <node pkg="terrasentia_sensors" type="terra_sensor_relay_node" name="sim_sensor_node"/> -->
+     </group>
+
+     <!-- Start RViz for visualization -->
+     <group if="$(arg use_rviz)">
+          <node name="rviz" pkg="rviz" type="rviz"
+                args="-d $(find terrasentia_description)/config/rviz/dual_ts0_config.rviz" />
+     </group>
+
+</launch>

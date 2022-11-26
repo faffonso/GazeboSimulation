@@ -1,0 +1,67 @@
+<sdf version="1.5">
+     <model name="sorghum_variant_0">
+          <static>true</static>
+          <link name="link">
+               <inertial>
+                    <pose>0 0 0 0 0 0</pose>
+                    <mass>4</mass>
+                    <inertia>
+                         <ixx>0.01</ixx>
+                         <ixy>0</ixy>
+                         <ixz>0</ixz>
+                         <iyy>0.01</iyy>
+                         <iyz>0</iyz>
+                         <izz>0.01</izz>
+                    </inertia>
+               </inertial>
+
+               <collision name='collision'>
+                    <pose>0 0 0.125 0 0 0</pose>
+                    <geometry>
+                         <cylinder>
+                              <radius>0.0075</radius>
+                              <length>0.25</length>
+                         </cylinder>
+                    </geometry>
+                    <max_contacts>10</max_contacts>
+               </collision>
+
+               <visual name="stem">
+                    <geometry>
+                         <mesh>
+                              <uri>model://sorghum_variant_0/meshes/sorghum_variant_0.dae</uri>
+                              <submesh>
+                                   <name>Stem</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://sorghum_variant_0/materials/scripts/</uri>
+                              <uri>model://sorghum_variant_0/materials/textures/</uri>
+                              <name>Sorghum/Stem</name>
+                         </script>
+                    </material>
+               </visual>
+
+               <visual name="leaves">
+                    <geometry>
+                         <mesh>
+                              <uri>model://sorghum_variant_0/meshes/sorghum_variant_0.dae</uri>
+                              <submesh>
+                                   <name>Leaves</name>
+                              </submesh>
+                         </mesh>
+                    </geometry>
+                    <material>
+                         <script>
+                              <uri>model://sorghum_variant_0/materials/scripts/</uri>
+                              <uri>model://sorghum_variant_0/materials/textures/</uri>
+                              <name>Sorghum/Leaves</name>
+                         </script>
+                    </material>
+               </visual>
+
+          </link>
+     </model>
+</sdf>

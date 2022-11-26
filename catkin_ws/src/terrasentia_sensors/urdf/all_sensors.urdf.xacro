@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<robot name="all_sensors" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- This file unifies all sensors that can be used on simulation, defined as xacro:macros -->
+
+	<!-- ====================================================
+                         	Cameras
+     ========================================================= -->
+
+	<!-- Axis p5512 -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/axis_p5512.urdf.xacro" />
+
+	<!-- Axis m5013 -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/axis_m5013.urdf.xacro" />
+
+	<!-- uEye CP Gige -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/ueye_cp_gige.urdf.xacro" />
+
+	<!-- ELP USB Camera w/ Normal Lens -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/elp_usb_camera.urdf.xacro" />
+
+	<!-- ====================================================
+                         	RGBD
+     ========================================================= -->
+
+	<!-- Asus Xtion PRO -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/asus_xtion_pro.urdf.xacro" />
+	<!-- Kinect -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/kinect.urdf.xacro" />
+	<!-- KinectV2 -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/kinectv2.urdf.xacro" />
+	<!-- Orbbec Astra -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/orbbec_astra.urdf.xacro" />
+	<!-- Fotonic E Series -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/fotonic_e.urdf.xacro" />
+
+	<!-- ====================================================
+						GPS
+	========================================================= -->
+
+	<!-- GPS -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/gps.urdf.xacro" />
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/gps-with-periodicnoisebox.urdf.xacro" />
+
+	<!-- ====================================================
+                         	LiDAR
+     ========================================================= -->
+
+	<!-- Hokuyo urg04lx -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/hokuyo_urg04lx.urdf.xacro" />
+
+	<!-- Hokuyo utm30lx -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/hokuyo_utm30lx.urdf.xacro" />
+
+	<!-- Hokuyo ust10lx -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/hokuyo_ust10lx.urdf.xacro" />
+	<!-- Hokuyo 3d -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/hokuyo3d.urdf.xacro" />
+
+	<!-- Sick s3000 -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/sick_s3000.urdf.xacro" />
+
+	<!-- Sick s300 -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/sick_s300.urdf.xacro" />
+
+	<!-- Sick Tim 571 -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/sick_tim571.urdf.xacro" />
+
+	<!-- Rplidar -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/rplidar.urdf.xacro" />
+
+	<!-- Velodyne VLP-16 (Puck) -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/vlp_16.urdf.xacro" />
+
+	<!-- TEST: Velodyne VLP-16 (Puck) -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/test_vlp_16.urdf.xacro" />
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/test_vlp_16_support.urdf.xacro" />
+
+	<!-- ====================================================
+                         	IMU
+     ========================================================= -->
+	<!-- Imu -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/imu.urdf.xacro" />
+
+	<!-- Imu hector -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/imu_hector_plugin.urdf.xacro" />
+
+	<!-- Imu Terra -->
+	<xacro:include filename="$(find terrasentia_sensors)/urdf/imu_terra_plugin.urdf.xacro" />
+
+	<!-- ====================================================
+                         	Misc
+     ========================================================= -->
+
+	<!--Sonar sensor params="name parent *origin ros_topic update_rate min_range max_range field_of_view ray_count"-->
+	<xacro:include filename="sonar.urdf.xacro" />
+
+
+
+
+</robot>

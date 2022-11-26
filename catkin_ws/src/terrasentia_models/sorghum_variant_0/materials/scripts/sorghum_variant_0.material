@@ -1,0 +1,35 @@
+material Sorghum/Stem
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16brn1.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}
+
+material Sorghum/Leaves
+{
+  technique
+  {
+    pass
+    {
+      alpha_rejection greater 128
+
+      texture_unit
+      {
+        texture AG16lef3.tif
+      }
+      cull_hardware none
+      cull_software none
+    }
+  }
+}

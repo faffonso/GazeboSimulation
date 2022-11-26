@@ -1,0 +1,36 @@
+<launch>
+     <arg name="x" default="0"/>
+     <arg name="y" default="0"/>
+     <arg name="z" default="0.175"/>
+     <arg name="roll" default="0"/>
+     <arg name="pitch" default="0"/>
+     <arg name="yaw" default="0"/>
+
+     <arg name="use_joy" default="true"/>
+     <arg name="dev_joy" default="/dev/input/js1"/>
+     <arg name="gui" default="false" />
+     <arg name="bot_model" default="tsv3_default.urdf.xacro" />
+
+     <param name="use_gui" value="$(arg gui)" />
+
+     <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+          <arg name="paused" value="true"/>
+          <arg name="verbose" value="true"/>
+     </include>
+
+	<include file="$(find terrasentia_description)/launch/include/load_tsv3_model.launch" >
+     </include>
+
+     <node pkg="joy" type="joy_node" name="joy_node">
+          <param name="dev" value="$(arg dev_joy)"/>
+     </node>
+     <node pkg="teleop_twist_joy" type="teleop_node" name="joy_controller_node">
+          <param name="enable_button" value="5"/>
+          <param name="axis_angular" value="2"/>
+          <param name="scale_linear" value="1"/>
+          <param name="scale_angular" value="1.5"/>
+     </node>
+
+
+
+</launch>
